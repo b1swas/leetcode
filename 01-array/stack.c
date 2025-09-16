@@ -34,7 +34,7 @@ void st_push(Stack* st, int n) {
 }
 
 int st_pop(Stack* st) {
-    int res = st->arr[st->length--];
+    int res = st->arr[--st->length];
     return res;
 }
 
@@ -63,8 +63,11 @@ int main(int argc, char *argv[]) {
     st_push(st, 3);
     st_print(st);
 
-    st_pop(st);
+    printf("Popped: %d\n", st_pop(st));
     st_print(st);
 
-    printf("Top: %d", st_peek(st));
+    printf("Top: %d\n", st_peek(st));
+
+    free(st->arr);
+    free(st);
 }
