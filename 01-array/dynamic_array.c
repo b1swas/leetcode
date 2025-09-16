@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct {
-    int capacity;
-    int length;
-    int *arr;
-} DynArr;
+#include "dynamic_array.h"
 
 DynArr* da_initialize(int capacity) {
     DynArr* da = malloc(sizeof(DynArr));
@@ -68,32 +64,32 @@ void da_print(DynArr *da) {
 }
 
 
-int main (int argc, char *argv[]) {
-    DynArr *da = da_initialize(2);
-    da_print(da);
-
-    da_push(da, 1);
-    da_print(da);
-
-    da_push(da, 2);
-    da_print(da);
-
-    da_push(da, 4);
-    da_print(da);
-
-    da_insert(da, 2, 3); 
-    da_print(da);
-
-    printf("Element #%d = %d\n", 1, da_get(da, 1));
-
-    da_pop(da);
-    da_print(da);
-
-    da_insert(da, 2, 3);  // out of bound
-    da_get(da, 2); // out of bound
-    da_print(da);
-
-
-    free(da->arr);
-    free(da);
-}
+// int main (int argc, char *argv[]) {
+//     DynArr *da = da_initialize(2);
+//     da_print(da);
+// 
+//     da_push(da, 1);
+//     da_print(da);
+// 
+//     da_push(da, 2);
+//     da_print(da);
+// 
+//     da_push(da, 4);
+//     da_print(da);
+// 
+//     da_insert(da, 2, 3); 
+//     da_print(da);
+// 
+//     printf("Element #%d = %d\n", 1, da_get(da, 1));
+// 
+//     da_pop(da);
+//     da_print(da);
+// 
+//     da_insert(da, 2, 3);  // out of bound
+//     da_get(da, 2); // out of bound
+//     da_print(da);
+// 
+// 
+//     free(da->arr);
+//     free(da);
+// }
