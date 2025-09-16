@@ -10,3 +10,7 @@
     * when ran out of space, new memory allocated + copy each element: O(n) + O(n)
     * reallocation is generally done with double of previous size: amortized time complexity O(n)
     * so time complexity is same as static array
+- stack
+    * 3 operations: push, pop, peek/top (read last element)
+    * Basically a dynamic array
+    * LIFO: Last in, First out
