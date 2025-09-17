@@ -18,43 +18,28 @@ void printArr(int *arr, int len) {
 }
 
 int calPoints(char** operations, int operationsSize) {
-    int capacity = 8;
+    int capacity = operationsSize;
     int length = 0;
     int* points = malloc(capacity*sizeof(int));
+    int sum = 0;
 
     for (int i = 0; i < operationsSize; i++) {
         if (strcmp(operations[i], "C") == 0) {
-                length--;
+            sum -= points[--length];
         } else if (strcmp(operations[i], "D") == 0) {
-            if(length == capacity) {
-                capacity *= 2;
-                points = realloc(points, capacity*sizeof(int));
-            }
             points[length] = 2*points[length-1];
-            length++;
+            sum += points[length++];
         } else if (strcmp(operations[i], "+") == 0) {
-            if(length == capacity) {
-                capacity *= 2;
-                points = realloc(points, capacity*sizeof(int));
-            }
             points[length] = points[length-1] + points[length-2];
-            length++;
+            sum += points[length++];
         } else {
-            if(length == capacity) {
-                capacity *= 2;
-                points = realloc(points, capacity*sizeof(int));
-            }
-            points[length] = atoi(operations[i]); // 'num'-'0' = ASCII diff = num itself
-            length++;
+            points[length] = atoi(operations[i]);
+            sum += points[length++];
         }
 
         printArr(points, length);
     }
 
-    int sum = 0;
-    for (int i = 0; i < length; i++) {
-        sum += points[i];
-    }
     return sum;
 }
 
