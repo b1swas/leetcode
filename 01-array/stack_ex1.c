@@ -8,40 +8,60 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-#include "dynamic_array.h"
+void printArr(int *arr, int len) {
+    for (int i = 0; i < len; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
 
-int calPoints(char* operations, int operationsSize) {
-    DynArr *points = da_initialize(4);
-    int sum = 0;
+int calPoints(char** operations, int operationsSize) {
+    int capacity = 8;
+    int length = 0;
+    int* points = malloc(capacity*sizeof(int));
+
     for (int i = 0; i < operationsSize; i++) {
-        switch (operations[i]) {
-            case 'C':
-                da_pop(points);
-                break;
-            case 'D':
-                da_push(points, 2*da_get(points, points->length-1));
-                break;
-            case '+':
-                da_push(points, da_get(points, points->length-1)+da_get(points, points->length-2));
-                break;
-            default:
-                da_push(points, operations[i]-'0'); // 'num'-'0' = ASCII diff = num itself
-                break;
+        if (strcmp(operations[i], "C") == 0) {
+                length--;
+        } else if (strcmp(operations[i], "D") == 0) {
+            if(length == capacity) {
+                capacity *= 2;
+                points = realloc(points, capacity*sizeof(int));
+            }
+            points[length] = 2*points[length-1];
+            length++;
+        } else if (strcmp(operations[i], "+") == 0) {
+            if(length == capacity) {
+                capacity *= 2;
+                points = realloc(points, capacity*sizeof(int));
+            }
+            points[length] = points[length-1] + points[length-2];
+            length++;
+        } else {
+            if(length == capacity) {
+                capacity *= 2;
+                points = realloc(points, capacity*sizeof(int));
+            }
+            points[length] = atoi(operations[i]); // 'num'-'0' = ASCII diff = num itself
+            length++;
         }
+
+        printArr(points, length);
     }
 
-    for (int i = 0; i < points->length; i++) {
-        sum += da_get(points, i);
+    int sum = 0;
+    for (int i = 0; i < length; i++) {
+        sum += points[i];
     }
-
     return sum;
 }
 
 int main(int argc, char *argv[]) {
 
-    char ops[] = {'5','2','C','D','+'}; // final [5, 10, 15] = sum 30
+    char* ops[] = {"5","-2","4","C","D","9","+","+"}; // final sum 27
 
-    int score_sum = calPoints(ops, 5);
+    int score_sum = calPoints(ops, 8);
     printf("Sum: %d\n", score_sum);
 }
